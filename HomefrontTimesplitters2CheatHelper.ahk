@@ -260,22 +260,22 @@ SoundBeep(1000)
 
 return
 
-unlockIncinvibility:
+unlockInvincibility:
 
 SoundBeep()
 
-OutputDebug, unlockIncinvibility::begin
+OutputDebug, unlockInvincibility::begin
 
-KeyWait, %unlockIncinvibilityKey%
+KeyWait, %unlockInvincibilityKey%
 
-OutputDebug, unlockIncinvibility::1 (2)
+OutputDebug, unlockInvincibility::1 (2)
 SendInput, {2 down}
 Sleep, %holdDelay%
 SendInput, {2 up}
 
 Sleep, %inputDelay%
 
-OutputDebug, unlockIncinvibility::2 (LButton + RButton + E)
+OutputDebug, unlockInvincibility::2 (LButton + RButton + E)
 SendInput, {LButton down}
 SendInput, {RButton down}
 SendInput, {E down}
@@ -286,7 +286,7 @@ SendInput, {LButton up}
 
 Sleep, %inputDelay%
 
-OutputDebug, unlockIncinvibility::3 (LButton + RButton + 1)
+OutputDebug, unlockInvincibility::3 (LButton + RButton + 1)
 SendInput, {LButton down}
 SendInput, {RButton down}
 SendInput, {1 down}
@@ -297,14 +297,14 @@ SendInput, {LButton up}
 
 Sleep, %inputDelay%
 
-OutputDebug, unlockIncinvibility::4 (RButton + 2)
+OutputDebug, unlockInvincibility::4 (RButton + 2)
 SendInput, {RButton down}
 SendInput, {2 down}
 Sleep, %holdDelay%
 SendInput, {2 up}
 SendInput, {RButton up}
 
-OutputDebug, unlockIncinvibility::end
+OutputDebug, unlockInvincibility::end
 
 SoundBeep(1000)
 
@@ -716,14 +716,14 @@ ReadConfigFile()
 	IniRead, isQwerty, %configFileName%, Keys, isQwerty, 1
 	IniRead, unlockArcadeKey, %configFileName%, Keys, unlockArcadeKey, Numpad1
 	IniRead, unlockChallengeKey, %configFileName%, Keys, unlockChallengeKey, Numpad2
-	IniRead, unlockIncinvibilityKey, %configFileName%, Keys, unlockIncinvibilityKey, Numpad3
+	IniRead, unlockInvincibilityKey, %configFileName%, Keys, unlockInvincibilityKey, Numpad3
 	IniRead, unlockStoryKey, %configFileName%, Keys, unlockStoryKey, Numpad4
 	IniRead, unlockUnknown1Key, %configFileName%, Keys, unlockUnknown1Key, Numpad5
 	IniRead, unlockUnknown2Key, %configFileName%, Keys, unlockUnknown2Key, Numpad6
 	IniRead, unlockUnknown3Key, %configFileName%, Keys, unlockUnknown3Key, Numpad7
 	IniRead, isUnlockArcade, %configFileName%, Keys, isUnlockArcade, 1
 	IniRead, isUnlockChallenge, %configFileName%, Keys, isUnlockChallenge, 1
-	IniRead, isUnlockIncinvibility, %configFileName%, Keys, isUnlockIncinvibility, 1
+	IniRead, isUnlockInvincibility, %configFileName%, Keys, isUnlockInvincibility, 1
 	IniRead, isUnlockStory, %configFileName%, Keys, isUnlockStory, 1
 	IniRead, isUnlockUnknown1, %configFileName%, Keys, isUnlockUnknown1, 1
 	IniRead, isUnlockUnknown2, %configFileName%, Keys, isUnlockUnknown2, 1
@@ -741,8 +741,8 @@ RegisterHotkeys()
 		Hotkey, ~%unlockArcadeKey%, unlockArcade
 	if (isUnlockChallenge)
 		Hotkey, ~%unlockChallengeKey%, unlockChallenge
-	if (isUnlockIncinvibility)
-		Hotkey, ~%unlockIncinvibilityKey%, unlockIncinvibility
+	if (isUnlockInvincibility)
+		Hotkey, ~%unlockInvincibilityKey%, unlockInvincibility
 	if (isUnlockStory)
 		Hotkey, ~%unlockStoryKey%, unlockStory
 	if (isUnlockUnknown1)
@@ -762,8 +762,8 @@ ReleaseAllKeys()
 		SendInput % "{" . unlockArcadeKey . " up}"
 	if (GetKeyState(unlockChallengeKey))
 		SendInput % "{" . unlockChallengeKey . " up}"
-	if (GetKeyState(unlockIncinvibilityKey))
-		SendInput % "{" . unlockIncinvibilityKey . " up}"
+	if (GetKeyState(unlockInvincibilityKey))
+		SendInput % "{" . unlockInvincibilityKey . " up}"
 	if (GetKeyState(unlockStoryKey))
 		SendInput % "{" . unlockStoryKey . " up}"
 	if (GetKeyState(unlockUnknown1Key))
