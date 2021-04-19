@@ -14,23 +14,14 @@ SetWorkingDir %A_ScriptDir%      ; Ensures a consistent starting directory.
 OnExit("ExitFunc", -1)
 
 configFileName := "HomefrontTimesplitters2CheatHelper.ini"
+;windowID := 0
 
 ; Config file is missing, exit
 if (!FileExist(configFileName))
 	ExitWithErrorMessage(configFileName . " not found! The script will now exit.")
 
 ReadConfigFile()
-
-; Make the hotkeys active only for a specific window
-WinWaitActive, %windowName%
-Sleep, %hookDelay%
-WinGet, windowID, ID, %windowName%
-GroupAdd, windowIDGroup, ahk_id %windowID%
-Hotkey, IfWinActive, ahk_group windowIDGroup
-
-RegisterHotkeys()
-
-SetTimer, ReleaseKeysOnFocusLost, %focusCheckDelay%
+SetTimer, OnFocusChanged, %focusCheckDelay%
 
 return
 
@@ -700,6 +691,47 @@ SoundBeep(1000)
 
 return
 
+HookWindow()
+{
+	; All the variables below are declared as global so they can be used in the whole script
+	global
+	
+	; Make the hotkeys active only for a specific window
+	OutputDebug, HookWindow::begin
+	WinWaitActive, %windowName%
+	OutputDebug, HookWindow::WinWaitActive
+	Sleep, %hookDelay%
+	WinGet, windowID, ID, %windowName%
+	OutputDebug, HookWindow::WinGet %windowID%
+	GroupAdd, windowIDGroup, ahk_id %windowID%
+	Hotkey, IfWinActive, ahk_group windowIDGroup
+	OutputDebug, HookWindow::end
+}
+
+OnFocusChanged()
+{
+	global windowName
+	
+	OutputDebug, OnFocusChanged::begin
+	
+	; Make sure to hook the window again if it no longer exists
+	if !WinExist(windowName)
+	{
+		HookWindow()
+		RegisterHotkeys()	
+	}
+	else
+	{
+		OutputDebug, OnFocusChanged::WinWaitActive
+		WinWaitActive, %windowName%
+	}
+	
+	OutputDebug, OnFocusChanged::WinWaitNotActive
+	WinWaitNotActive, %windowName%
+	ReleaseAllKeys()
+	OutputDebug, OnFocusChanged::end
+}
+
 ReadConfigFile()
 {
 	; All the variables below are declared as global so they can be used in the whole script
@@ -772,19 +804,6 @@ ReleaseAllKeys()
 		SendInput % "{" . unlockUnknown2Key . " up}"
 	if (GetKeyState(unlockUnknown3Key))
 		SendInput % "{" . unlockUnknown3Key . " up}"
-}
-
-ReleaseKeysOnFocusLost()
-{
-	global windowName
-	
-	OutputDebug, releaseKeysOnFocusLost::begin
-	WinWaitActive, %windowName%
-	OutputDebug, releaseKeysOnFocusLost::WinWaitActive
-	WinWaitNotActive, %windowName%
-	OutputDebug, releaseKeysOnFocusLost::WinWaitNotActive
-	ReleaseAllKeys()
-	OutputDebug, releaseKeysOnFocusLost::end
 }
 
 ReloadScript()
