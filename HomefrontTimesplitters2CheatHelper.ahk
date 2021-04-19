@@ -14,7 +14,6 @@ SetWorkingDir %A_ScriptDir%      ; Ensures a consistent starting directory.
 OnExit("ExitFunc", -1)
 
 configFileName := "HomefrontTimesplitters2CheatHelper.ini"
-;windowID := 0
 
 ; Config file is missing, exit
 if (!FileExist(configFileName))
@@ -200,11 +199,11 @@ SendInput, {RButton up}
 
 Sleep, %inputDelay%
 
-OutputDebug % isQwerty ? "unlockChallenge::6 (RButton + Q)" : "unlockChallenge::6 (RButton + A)"
+OutputDebug % bQwerty ? "unlockChallenge::6 (RButton + Q)" : "unlockChallenge::6 (RButton + A)"
 SendInput, {RButton down}
-SendInput % isQwerty ? "{Q down}" : "{A down}"
+SendInput % bQwerty ? "{Q down}" : "{A down}"
 Sleep, %holdDelay%
-SendInput % isQwerty ? "{Q up}" : "{A up}"
+SendInput % bQwerty ? "{Q up}" : "{A up}"
 SendInput, {RButton up}
 
 Sleep, %inputDelay%
@@ -309,20 +308,20 @@ OutputDebug, unlockStory::begin
 
 KeyWait, %unlockStoryKey%
 
-OutputDebug % isQwerty ? "unlockStory::1 (RButton + Q)" : "unlockStory::1 (RButton + A)"
+OutputDebug % bQwerty ? "unlockStory::1 (RButton + Q)" : "unlockStory::1 (RButton + A)"
 SendInput, {RButton down}
-SendInput % isQwerty ? "{Q down}" : "{A down}"
+SendInput % bQwerty ? "{Q down}" : "{A down}"
 Sleep, %holdDelay%
-SendInput % isQwerty ? "{Q up}" : "{A up}"
+SendInput % bQwerty ? "{Q up}" : "{A up}"
 SendInput, {RButton up}
 
 Sleep, %inputDelay%
 
-OutputDebug % isQwerty ? "unlockStory::2 (RButton + Q)" : "unlockStory::2 (RButton + A)"
+OutputDebug % bQwerty ? "unlockStory::2 (RButton + Q)" : "unlockStory::2 (RButton + A)"
 SendInput, {RButton down}
-SendInput % isQwerty ? "{Q down}" : "{A down}"
+SendInput % bQwerty ? "{Q down}" : "{A down}"
 Sleep, %holdDelay%
-SendInput % isQwerty ? "{Q up}" : "{A up}"
+SendInput % bQwerty ? "{Q up}" : "{A up}"
 SendInput, {RButton up}
 
 Sleep, %inputDelay%
@@ -745,7 +744,7 @@ ReadConfigFile()
 	IniRead, inputDelay, %configFileName%, General, inputDelay, 500
 
 	; Keys
-	IniRead, isQwerty, %configFileName%, Keys, isQwerty, 1
+	IniRead, bQwerty, %configFileName%, Keys, bQwerty, 1
 	IniRead, unlockArcadeKey, %configFileName%, Keys, unlockArcadeKey, Numpad1
 	IniRead, unlockChallengeKey, %configFileName%, Keys, unlockChallengeKey, Numpad2
 	IniRead, unlockInvincibilityKey, %configFileName%, Keys, unlockInvincibilityKey, Numpad3
@@ -753,35 +752,35 @@ ReadConfigFile()
 	IniRead, unlockUnknown1Key, %configFileName%, Keys, unlockUnknown1Key, Numpad5
 	IniRead, unlockUnknown2Key, %configFileName%, Keys, unlockUnknown2Key, Numpad6
 	IniRead, unlockUnknown3Key, %configFileName%, Keys, unlockUnknown3Key, Numpad7
-	IniRead, isUnlockArcade, %configFileName%, Keys, isUnlockArcade, 1
-	IniRead, isUnlockChallenge, %configFileName%, Keys, isUnlockChallenge, 1
-	IniRead, isUnlockInvincibility, %configFileName%, Keys, isUnlockInvincibility, 1
-	IniRead, isUnlockStory, %configFileName%, Keys, isUnlockStory, 1
-	IniRead, isUnlockUnknown1, %configFileName%, Keys, isUnlockUnknown1, 1
-	IniRead, isUnlockUnknown2, %configFileName%, Keys, isUnlockUnknown2, 1
-	IniRead, isUnlockUnknown3, %configFileName%, Keys, isUnlockUnknown3, 1
+	IniRead, bUnlockArcade, %configFileName%, Keys, bUnlockArcade, 1
+	IniRead, bUnlockChallenge, %configFileName%, Keys, bUnlockChallenge, 1
+	IniRead, bUnlockInvincibility, %configFileName%, Keys, bUnlockInvincibility, 1
+	IniRead, bUnlockStory, %configFileName%, Keys, bUnlockStory, 1
+	IniRead, bUnlockUnknown1, %configFileName%, Keys, bUnlockUnknown1, 1
+	IniRead, bUnlockUnknown2, %configFileName%, Keys, bUnlockUnknown2, 1
+	IniRead, bUnlockUnknown3, %configFileName%, Keys, bUnlockUnknown3, 1
 
 	; Debug
-	IniRead, isSound, %configFileName%, Debug, isSound, 1
+	IniRead, bSound, %configFileName%, Debug, bSound, 1
 }
 
 RegisterHotkeys()
 {
 	global
 	
-	if (isUnlockArcade)
+	if (bUnlockArcade)
 		Hotkey, ~%unlockArcadeKey%, unlockArcade
-	if (isUnlockChallenge)
+	if (bUnlockChallenge)
 		Hotkey, ~%unlockChallengeKey%, unlockChallenge
-	if (isUnlockInvincibility)
+	if (bUnlockInvincibility)
 		Hotkey, ~%unlockInvincibilityKey%, unlockInvincibility
-	if (isUnlockStory)
+	if (bUnlockStory)
 		Hotkey, ~%unlockStoryKey%, unlockStory
-	if (isUnlockUnknown1)
+	if (bUnlockUnknown1)
 		Hotkey, ~%unlockUnknown1Key%, unlockUnknown1
-	if (isUnlockUnknown2)
+	if (bUnlockUnknown2)
 		Hotkey, ~%unlockUnknown2Key%, unlockUnknown2
-	if (isUnlockUnknown3)
+	if (bUnlockUnknown3)
 		Hotkey, ~%unlockUnknown3Key%, unlockUnknown3
 }
 
@@ -815,9 +814,9 @@ ReloadScript()
 
 SoundBeep(ByRef pDuration := 150)
 {
-	global isSound
+	global bSound
 	
-	if (isSound)
+	if (bSound)
 		SoundBeep, 1000, pDuration
 }
 
