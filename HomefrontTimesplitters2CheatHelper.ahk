@@ -711,7 +711,7 @@ HookWindow()
 
 OnFocusChanged()
 {
-	global windowName
+	global
 	
 	OutputDebug, OnFocusChanged::begin
 	
