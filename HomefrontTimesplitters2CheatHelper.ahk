@@ -13,7 +13,9 @@ SetWorkingDir %A_ScriptDir%      ; Ensures a consistent starting directory.
 ; Register a function to be called on exit
 OnExit("ExitFunc", -1)
 
-configFileName := "HomefrontTimesplitters2CheatHelper.ini"
+windowID := 0
+configFileName := RTrim(A_ScriptName, A_IsCompiled ? ".exe" : ".ahk") . ".ini"
+OutputDebug, init::configFileName %configFileName%
 
 ; Config file is missing, exit
 if (!FileExist(configFileName))
@@ -714,7 +716,7 @@ OnFocusChanged()
 	OutputDebug, OnFocusChanged::begin
 	
 	; Make sure to hook the window again if it no longer exists
-	if !WinExist(windowName)
+	if (!WinExist(windowName) || !windowID)
 	{
 		HookWindow()
 		RegisterHotkeys()	
