@@ -28,10 +28,9 @@ return
 
 unlockArcade:
 
-SoundBeep()
-
 OutputDebug, unlockArcade::begin
 
+SoundBeep()
 KeyWait, %unlockArcadeKey%
 
 OutputDebug, unlockArcadeKey::1 (LButton + RButton + 1)
@@ -144,10 +143,9 @@ return
 
 unlockChallenge:
 
-SoundBeep()
-
 OutputDebug, unlockChallenge::begin
 
+SoundBeep()
 KeyWait, %unlockChallengeKey%
 
 OutputDebug, unlockChallenge::1 (LButton + G)
@@ -254,10 +252,9 @@ return
 
 unlockInvincibility:
 
-SoundBeep()
-
 OutputDebug, unlockInvincibility::begin
 
+SoundBeep()
 KeyWait, %unlockInvincibilityKey%
 
 OutputDebug, unlockInvincibility::1 (2)
@@ -304,10 +301,9 @@ return
 
 unlockStory:
 
-SoundBeep()
-
 OutputDebug, unlockStory::begin
 
+SoundBeep()
 KeyWait, %unlockStoryKey%
 
 OutputDebug % bQwerty ? "unlockStory::1 (RButton + Q)" : "unlockStory::1 (RButton + A)"
@@ -404,10 +400,9 @@ return
 
 unlockUnknown1:
 
-SoundBeep()
-
 OutputDebug, unlockUnknown1::begin
 
+SoundBeep()
 KeyWait, %unlockUnknown1Key%
 
 OutputDebug, unlockUnknown1::1 (LButton + RButton + E)
@@ -514,10 +509,9 @@ return
 
 unlockUnknown2:
 
-SoundBeep()
-
 OutputDebug, unlockUnknown2::begin
 
+SoundBeep()
 KeyWait, %unlockUnknown2Key%
 
 OutputDebug, unlockUnknown2::1 (LButton + RButton + E)
@@ -626,10 +620,9 @@ return
 
 unlockUnknown3:
 
-SoundBeep()
-
 OutputDebug, unlockUnknown3::begin
 
+SoundBeep()
 KeyWait, %unlockUnknown3Key%
 
 OutputDebug, unlockUnknown3::1 (RButton + G)
@@ -712,21 +705,21 @@ HookWindow()
 OnFocusChanged()
 {
 	global
-	
+
 	OutputDebug, OnFocusChanged::begin
-	
+
 	; Make sure to hook the window again if it no longer exists
 	if (!WinExist(windowName) || !windowID)
 	{
 		HookWindow()
-		RegisterHotkeys()	
+		RegisterHotkeys()
 	}
 	else
 	{
 		OutputDebug, OnFocusChanged::WinWaitActive
 		WinWaitActive, %windowName%
 	}
-	
+
 	OutputDebug, OnFocusChanged::WinWaitNotActive
 	WinWaitNotActive, %windowName%
 	ReleaseAllKeys()
@@ -737,7 +730,7 @@ ReadConfigFile()
 {
 	; All the variables below are declared as global so they can be used in the whole script
 	global
-	
+
 	; General
 	IniRead, windowName, %configFileName%, General, windowName
 	IniRead, hookDelay, %configFileName%, General, hookDelay, 0
@@ -769,7 +762,7 @@ ReadConfigFile()
 RegisterHotkeys()
 {
 	global
-	
+
 	if (bUnlockArcade)
 		Hotkey, ~%unlockArcadeKey%, unlockArcade
 	if (bUnlockChallenge)
@@ -817,7 +810,7 @@ ReloadScript()
 SoundBeep(ByRef pDuration := 150)
 {
 	global bSound
-	
+
 	if (bSound)
 		SoundBeep, 1000, pDuration
 }
